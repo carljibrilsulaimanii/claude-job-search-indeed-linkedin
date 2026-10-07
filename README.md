@@ -5,8 +5,9 @@ uses both. Claude searches by what you can *do* rather than by the titles you've
 reads each full posting, scores it 0–100 against your real background, and keeps
 everything in one live **Job Search Tracker** artifact, with **Active Targets**,
 **Already Applied**, **Pipeline**, **Lower Matches**, **Archive** and **Ruled Out** tabs,
-that it updates whenever you report a change. When an interview is booked, it also builds
-an interview prep doc.
+that it updates whenever you report a change. The tracker is a live dashboard that scores
+each job, summarizes the fit, shows the salary range and tells you which resume to send.
+When an interview is booked, it also builds an interview prep doc.
 
 Built by [Jibril Sulaiman](https://github.com/carljibrilsulaimanii).
 
@@ -392,6 +393,27 @@ Each of the six tabs shows its count:
 | **Lower Matches** | Open roles with no hard blocker that score under your cutoff. Same cards as Active Targets, sorted by score. A low score isn't a blocker, so these are kept, not ruled out. |
 | **Archive** | Your earlier application history as a searchable, sortable table, with suspicious recruiter outreach flagged |
 | **Ruled Out** | Each role with its hard blocker named in a red box, so you don't re-evaluate it in three weeks |
+
+**The dashboard, card by card.** These screenshots use made-up demo data; yours shows your
+own search.
+
+![Active Targets tab: scored job cards with salary, tags, fit summary and resume to use (demo data)](docs/tracker-active.png)
+
+**What each job card shows you:**
+
+| On the card | What it tells you |
+|---|---|
+| **Alignment score** (top right, 0–100) | How well the job matches your real background. Green 85+, amber 70–84, grey under 70. |
+| **Salary** (green tag) | The posted range, with base and OTE kept apart; "est." for estimates, or **Not posted – verify** when there's no range |
+| **Track and status tags** | The kind of role (e.g. SOLUTIONS ENG, REVOPS) and NEW or REACH |
+| **Why it fits & what to watch** (click to open) | A fit summary written for *your* background, the one gap to watch, and **Resume to use**: which of your standing resume versions to send, if you have more than one |
+| **Contact** | A named recruiter, hiring manager or 2nd-degree connection, and the move to make (for example, ask for a referral first) |
+| **Open posting** | The real job link |
+
+![Already Applied tab: status tags and the Latest box for each application (demo data)](docs/tracker-applied.png)
+
+On **Already Applied**, each card shows its status (Applied, Interviewing, Rejected) and a
+**Latest:** box with the next step.
 
 ⚠️ **It's one tracker for the whole search.** Claude updates the same artifact at the same
 link every time, and never makes a second one. To pick up in a new chat, paste the
