@@ -445,25 +445,65 @@ order:
 | 4 | Claude builds an **interview prep doc** (a Claude Doc when available) and links it from the card's **Latest:** box | A link in the chat and on the card |
 | 5 | The tracker's counts and the Applied notes box update: who's interviewing, who's declined | The masthead, stat rail and **Already Applied** notes |
 | 6 | Claude recommends recording the call with Granola if it isn't connected, with the consent reminder | In the chat |
-| 7 | **After the call:** Claude reads the Granola transcript, debriefs your answers (what was asked, what you said, stronger answers), drafts a thank-you email citing points from the conversation, and updates the prep doc for the next round | The chat, the prep doc, and the card's **Latest:** box |
+| 7 | **After the call:** Claude reads the Granola transcript (or one you paste), adds a dated debrief to the top of the prep doc, drafts a thank-you note, builds the next round's prep doc and updates the card | The prep doc, the chat, and the card's **Latest:** box |
 
-**What's in the prep doc:**
+**What's in the prep doc.** Every prep doc has the same sections in the same order, so
+you can compare one with the last. A section that was in an earlier doc is never dropped,
+and any section you add becomes part of every doc after it.
 
-| Section | Contents |
-|---|---|
-| The job | The original job link and the full job description, so you have it even after the posting closes |
-| 20 role questions | The questions most likely for this role, each with an answer in your voice built only from your real record. Nothing is invented. |
-| 20 interviewer questions | Questions this specific interviewer is likely to ask, based on their background, with answers |
-| Your intro | A short "tell me about yourself" you can say in under a minute |
-| 3 questions to ask | Questions for you to ask the interviewer |
+| # | Section | Contents |
+|---|---|---|
+| 1 | **Debrief** (later rounds only) | A dated summary of the previous round, at the top |
+| 2 | **Call snapshot** | Role, posted pay (base, bonus, equity, OTE), location and office rules, the interviewer's name and title, when you applied and which resume you sent, and the date, time, format and link. Any clash that week, and one line on what this interviewer is checking. |
+| 3 | **About the company** | What it sells, who buys, business model, named customers, leadership, funding, recent news and tools it uses, with every fact cited |
+| 4 | **Original job** | The link, pay and benefits, and every responsibility and requirement in close paraphrase. Your only copy once the posting closes. |
+| 5 | **Original application** | Every field you submitted (resume version, years-of-experience answers, salary entered, written answers), with "be ready for" notes wherever an answer differs from your record |
+| 6 | **Where this role overlaps existing jobs** | A drawn diagram: the role in the center, each job it folds in around it, your evidence and a strong / partial / gap marker for each |
+| 7 | **Fit and gaps** | Requirement, your evidence and fit level, then how to frame the gaps in your own words |
+| 8 | **Intro in three lengths** | 60–90 seconds, 20 seconds, and "background in two sentences", built on your strongest numbers |
+| 9 | **Proof points** | The posting's own phrases or KPIs matched to your numbers and where they happened |
+| 10 | **20 role questions** | Likely questions with answers in your voice from your real record, then the one gap to name honestly first |
+| 11 | **20 interviewer questions** | Based on the interviewer's LinkedIn profile. If it can't be found, the doc says so and works from their title. Share their profile later (a PDF export or screenshot) and Claude rebuilds this section to match. |
+| 12 | **My 3 questions** | Questions for you to ask, why, and what a good answer sounds like, plus extra questions for later rounds |
+| 13 | **What this role should pay** | A recommended base range, a benchmark table from pages actually opened, the overlapping jobs priced one by one, a short negotiation script and your floor |
+| 14 | **Logistics and guardrails** | The salary you already entered, a **Don't claim** list, a **Say exactly** list of numbers that must match your resume, and a check-before-the-call list (LinkedIn headline, which name to use, nothing private in your public portfolio) |
+| 15 | **Before and after** | A task list, then a thank-you draft with your full name and contact info in the signature |
+| 16 | **Sources** | Every page opened, with dates |
+
+**Onsite, final and hiring-manager rounds** also get a corrections table (what you said
+earlier, what your record shows, what to say now), deeper interviewer research including
+their talks or podcasts, a drawn 30/60/90 plan, and logistics (address, when to leave,
+what to bring).
 
 For a short screen (around 15 minutes), the four or five questions most likely to come
 up are marked, since that's all there's time for. If the interviewer isn't technical,
-the answers use plain language.
+the answers use plain language. Anything only you can confirm is marked
+`[confirm: ...]` instead of guessed. If the company bans AI help during live interviews,
+the snapshot says so: read the doc beforehand and keep it closed during the call.
 
-**For later rounds,** the transcript is what makes the prep better. Claude pulls out the
-questions they're likely to dig into, the answers to tighten, anything you promised to
-follow up on, and the names mentioned for the next panel, then researches those people.
+**Before the doc is written, Claude checks two things:**
+- **Who's who.** It finds the hiring manager when a posting names only a title, and looks
+  up who already does related work at the company on LinkedIn.
+- **Your claims.** When you mention a tool or kind of work that isn't on your resume,
+  Claude searches your connected email and Drive for trials, receipts and working docs,
+  and labels each one: paid plan, trial only, used in production, or not found. The doc
+  is written to that evidence, and anything unproven is marked for you to confirm.
+
+**After each interview, the debrief covers:**
+
+| Part | What you get |
+|---|---|
+| **What happened** | Outcome, next steps with names and dates, and what you learned: why they're hiring, the first focus, the hardest problem, team structure, pay signals |
+| **Questions and answers** | Each question asked, what you said, and a stronger answer |
+| **Fixes before the next round** | Answers that wandered, claims beyond your record or that conflict with your resume, anything on your don't-mention list, and pay handling (state one target, not your current pay) |
+| **Consistency check** | Every number you said compared with your record and with what you told other employers. One figure stated three ways to three companies is a reference-check risk, so you get the one to standardize on. |
+| **New proof points** | Strong examples that came up on the call, offered for your resumes and the next prep doc |
+| **Next round** | A full prep doc, the process laid out as a table with the expected decision date, any scheduling clash, research on the named next interviewers, and a 30/60/90 outline |
+| **Thank-you note** | Short and formal, sent the same day, addressed by name, citing one or two points from the call. Shown in chat first; Claude only saves it as an email draft if you ask. |
+
+⚠️ **Nothing is sent without your yes.** Replies Claude drafts for recruiters or
+schedulers stay marked "reply drafted, not sent" on the card until you confirm you sent
+them.
 
 ⚠️ **Consent.** Tell the interviewer you're taking notes with a transcription tool. Some
 states and countries require everyone on the call to agree.

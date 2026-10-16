@@ -1,6 +1,6 @@
 ---
 name: "job-search"
-description: "Run a capability-based job search across Indeed, LinkedIn, and the web, score each role against the person's real background, and keep a persistent Job Search Tracker artifact (Active, Applied, Pipeline, Lower Matches, Archive, Ruled Out). Use for finding jobs, matching roles to a resume, career pivots, fit checks on a named role, stalled searches, interview prep, and whenever the person reports applying, pastes a closed posting, or asks to update or clean the tracker."
+description: "Run a capability-based job search across Indeed, LinkedIn, and the web, score each role against the person's real background, and keep a persistent Job Search Tracker artifact (Active, Applied, Pipeline, Lower Matches, Archive, Ruled Out). Use for finding jobs, matching roles to a resume, career pivots, fit checks on a named role, stalled searches, interview prep, post-interview debriefs and thank-you notes, and whenever the person reports applying, pastes a closed posting or an interview transcript, or asks to update or clean the tracker."
 ---
 
 # Job Search
@@ -224,6 +224,8 @@ Links are full URLs taken from the tool results. If no real link exists, put a l
 - "Applied" (in words, or a confirmation screen or email) → move the row to Already Applied from whichever tab it sat on, with the date, a milestone, and the contact. A LinkedIn "apply now to your saved job" reminder is not an application.
 - A posting showing "No longer / Not currently accepting applications" → Ruled Out with "Posting closed (checked <date>)", the match score, and the contact, so a repost is recognized.
 - Interview steps (calls, screens, assignments, submissions) → status Interviewing, update the milestone with dates and links, and build the interview prep doc (see Interview prep).
+- A completed interview (a pasted transcript, notes, or "how did it go?") → run the debrief (see After each interview) and update the milestone and contact fields with the next step, its date, and every named person.
+- A reply you drafted for the person (to a recruiter, a scheduler, a hiring manager) is **not sent** until the person says it is. Record it on the card as "reply drafted, not sent" and change it only when they confirm or the next email or invite arrives.
 
 **Thresholds the person sets** ("remove everything under 75") apply to Active and to every future addition. Open roles under the threshold move to Lower Matches; they are not deleted. An applied role is never moved or deleted for its score. If a threshold empties the Active tab, say so plainly and point to the best live Lower Matches.
 
@@ -251,7 +253,8 @@ def put(h, sid, obj):
 3. **Validate before publishing**: every block passes `json.loads`; extract the main `<script>` and run `node --check`; dedupe rows by URL. For structural changes (a new tab), render the page headlessly and confirm tab counts and that the cards and toggles work.
 4. **Strip the skeleton.** The published page includes a wrapper the Artifact tool adds. Republish only the authored content: `h[h.find('<title>'):h.rfind('</body></html>')]`.
 5. **Publish to the same URL** (pass `file_path` and `url`; omit the favicon on republish).
-6. **Report in a line or two**: what moved where and the new tab counts. Don't re-describe the page.
+6. **If the publish is refused because a newer version is live**, the refusal saves that version to a local file. Re-run the same edit script against that saved file (never resend your old copy, never rebuild from memory), strip the skeleton, validate, and publish again.
+7. **Report in a line or two**: what moved where and the new tab counts. Don't re-describe the page.
 
 ## Optional: spreadsheet export
 
@@ -277,17 +280,52 @@ Never claim experience in the employer's own industry, product or platform unles
 
 ## Interview prep
 
-**Whenever an interview or recruiter screen is scheduled, build the prep doc automatically**; don't wait to be asked. Make it a living doc (Claude Docs when available), link it from the Applied card's milestone, and include:
+**Whenever an interview or recruiter screen is scheduled, build the prep doc automatically**; don't wait to be asked. Make it a living doc (Claude Docs when available), link it from the Applied card's milestone, and build it to the standard below.
 
-1. The original job link and the full job description.
-2. 20 likely interview questions for the role, each with an answer in the person's voice built only from their real record.
-3. 20 more questions based on the interviewer's LinkedIn profile, with answers. Look the interviewer up by name first (the posting or the scheduling email usually names them); someone who built training programs probes differently than someone who came up through sales.
-4. A short intro summary the person can say in under a minute.
-5. 3 questions for the person to ask the interviewer.
+### The prep doc standard
 
-Use plain language when the interviewer isn't technical. For a short interview, say a 15-minute screen, mark the four or five questions most likely to actually come up. Log every interview step and take-home assignment on the Applied card's milestone.
+Every prep doc carries the same sections, in this order. People compare one prep doc with the last one they used, and a section that was there before and is missing now reads as a mistake ("you're missing info included in the previous prep"). **Start each new doc from the section list of the most recent prior prep doc and never drop a section it had.** If the person adds a section to one doc, it becomes part of the standard for every doc after it.
+
+1. **Debrief** (later rounds only): a dated debrief of the previous round at the top. See After each interview.
+2. **Call snapshot**: a table with role, posted pay (base, bonus, equity, OTE), location and in-office rules, the interviewer's name and title, the applied date and which resume was sent, and the date, time, format and link or address. Add any clash that week (another interview the same day). Then one line on what this interviewer is checking.
+3. **About the company**: what it sells, who buys, the business model, named customers, leadership, funding, recent news and stack signals (a HubSpot meetings link, the forms on its site). Put any multi-product or multi-motion split in a small table. End with one line on why it matters for this person. Cite every fact.
+4. **Original job**: the link, pay and benefits, then a close paraphrase of every responsibility, requirement and nice-to-have, with the posting's own key phrases in quotes. The posting will close, so this is the person's only copy.
+5. **Original application**: a table of every field the person submitted: resume version, years-of-experience answers, salary entered, and the written answers. Add "things to be ready for" wherever a submitted answer differs from the record. If the exact text isn't available, say so, list the questions, and name the strongest story for each.
+6. **Where this role overlaps existing jobs**: a drawn diagram, never a list. The role sits in the center and each job it folds in is a box around it, showing what that job does, the person's evidence, and a fit marker (strong, partial or gap, in status colors). Under it, one sentence on the gap and how to lead around it. Include it in every prep doc. For a later round, copy the earlier doc's diagram rather than leaving it out. The diagram also feeds two questions (which parts already have an owner, and is this one builder or the first hire of a team) and the pay argument in section 13.
+7. **Fit and gaps**: a table of requirement, evidence and fit (strong, meets, partial, gap), then how to frame the gaps in the person's own words.
+8. **Intro in three lengths**: a 60 to 90 second intro, a 20-second version, and "background in two sentences". When the person supplies their own intro, keep their voice and structure, tie it to the posting's top asks, and put their strongest numbers in it.
+9. **Proof points**: a table of the posting's own phrase or KPI, the person's number, and where it happened.
+10. **20 role questions**, each with an answer in the person's voice built only from their real record. Follow them with a **Gap to handle honestly** note: the one weakness they should name first.
+11. **20 interviewer-side questions**, based on the interviewer's LinkedIn profile, with answers. Look the interviewer up by name first (the posting or the scheduling email usually names them); someone who built training programs probes differently than someone who came up through sales. If the profile can't be found, say so in the doc and base the questions on the interviewer's title, never an invented background. When the person later supplies the profile (a LinkedIn PDF export or a screenshot), rebuild this section the same turn: open it with a "From their profile | What it means for you" table (current role and tenure, prior companies and what those businesses do, recruiting or technical depth, how long they stayed places, listed skills), then rewrite the 20 questions to that background and suggest a rapport opener drawn from it. Update the interviewer's line in the call snapshot too.
+12. **My 3 questions**, each with why to ask it and what a good answer sounds like. Then **Additional questions** numbered from 4, for later rounds. Fold in any questions the person adds.
+13. **What this role should pay**: lead with a recommended base range in one sentence, then:
+    - A benchmark table (title, base, source with date) built from pages actually opened, never search snippets.
+    - The jobs from the overlap diagram priced one by one with sources, and what they would cost combined.
+    - How to use this: employers pay one person at the level of the hardest part, plus a premium for range, not the sum of the jobs.
+    - A short negotiation script and the person's floor.
+    - When no pay is posted, label every figure an estimate.
+14. **Logistics and guardrails**:
+    - The salary already entered on the application, and whether to hold it.
+    - A **Don't claim** list: credentials not held, tools only trialed, projects never launched, the employer's own industry.
+    - A **Say exactly** list of numbers that must match the resume.
+    - A **Check before the call** list: LinkedIn headline against the resume sent, which name to use, and that public portfolio or GitHub items don't expose another employer's interview assignment or client data.
+    - Bracketed items only the person can answer.
+15. **Before and after**: a task list (accept the invite, research the interviewer, reread the application answers), then a thank-you note draft with the person's full name and contact info in the signature.
+16. **Sources**: every page opened, with dates.
+
+**Onsite, final and hiring-manager rounds add:**
+- A **corrections table**: what the person said earlier, what the record shows, and what to say now.
+- An interviewer research table with sources, plus the interviewer's public talks or podcasts and the time stamps worth hearing.
+- A drawn 30/60/90 plan with a checkpoint for each phase.
+- Logistics: the address, when to leave, and what to bring (printed resumes, a one-page plan, work samples).
+
+Use plain language when the interviewer isn't technical. For a short interview, say a 15-minute screen, mark the four or five questions most likely to actually come up. Mark anything only the person can confirm with a bracketed note ([confirm: ...]) rather than guessing. If the company bans AI help during live interviews, say so in the call snapshot: read the doc beforehand, keep it closed during the call. Log every interview step and take-home assignment on the Applied card's milestone.
 
 Add answers to the questions that come up in almost every process, written to respect the don't-mention list: "Why are you leaving?" (honest, without what they keep private), "Are you interviewing elsewhere?", a weakness, and any requirement they don't meet. For scenario questions, give a short story with the key numbers itemized as bullets.
+
+**Find the people.** Postings often name the hiring manager by title only ("reports to our Chief Business Officer"). Check the company's leadership or about page, which often links LinkedIn profiles, then confirm on LinkedIn. To see who already owns adjacent work, run LinkedIn people searches filtered to the company's numeric URN (from its company profile) with short keywords ("lifecycle", "marketing", "operations", "revenue operations"). The company people page's keyword filter does not filter reliably, so don't rely on it. Report only the first page of results as checked, and say so. Ashby, Greenhouse and Lever boards expose public JSON APIs (for example `api.ashbyhq.com/posting-api/job-board/<board>`) that return the full posting when the careers page renders only with JavaScript.
+
+**Verify experience claims before writing them into answers.** When the person says they have used a tool or done a kind of work that is not in their resume, search their connected mailboxes and drive (all accounts they name) for welcome, trial, receipt, invoice, cancellation, and support emails, and for screenshots or working docs. Label each finding plainly: paid plan, trial only, used in production, studied, or not found. A free trial or a newsletter is not production use. Write the doc to the evidence, mark the rest for confirmation, and tell the person kindly where their memory and the records differ. If the search finds nothing, say so and note the tool may have lived on a work account the connectors can't see. Then write the claim exactly at the level the person stated it ("Coupler.io pipelines into Looker Studio" is pipeline and BI work, not warehouse work) and ask the one question that would raise it ("did any flow load into BigQuery or Snowflake?"). Update every place the doc touched the old claim: the don't-claim list, the fit table, the overlap diagram's fit marker, and any scripted answer. Also catch anything sensitive found along the way, such as plaintext passwords in a shared sheet, and recommend rotating them without repeating them.
 
 ### Recruiter messages before the interview
 
@@ -295,14 +333,25 @@ When the person pastes a recruiter email (scheduling link, a request for a recor
 
 ### After each interview
 
-**Recommend recording with Granola.** Granola is an AI notepad that transcribes calls from the computer's own audio, so no bot joins the meeting. Its Claude connector (`list_meetings`, `get_meeting_transcript`, `query_granola`) lets you read the transcript directly. When an interview is booked, suggest the person set it up before the call. Mention consent: recording and transcription rules vary by state and country, and some require everyone on the call to agree, so the person should tell the interviewer they're taking notes with a transcription tool.
+**Recommend recording with Granola.** Granola is an AI notepad that transcribes calls from the computer's own audio, so no bot joins the meeting. Its Claude connector (`list_meetings`, `get_meeting_transcript`, `query_granola`) lets you read the transcript directly. When an interview is booked, suggest the person set it up before the call. Mention consent: recording and transcription rules vary by state and country, and some require everyone on the call to agree, so the person should tell the interviewer they're taking notes with a transcription tool. If the company says it records interviews with its own AI notetaker, note that in the prep doc.
 
-**After the call, pull the transcript from Granola** (or use a pasted transcript, notes or a recording summary) and use it for every step below: the actual questions asked, the person's exact answers, what the interviewer said about the team, the role and next steps, and any names mentioned for later rounds. Feed this into the next round's prep doc: questions they're likely to dig into, answers to tighten, promises to follow up on, and the people to research before the next panel.
+**After the call, pull the transcript from Granola** (or use a pasted transcript, notes or a recording summary), then do all of this in the same turn:
 
-1. **Debrief:** list the questions that were actually asked, what the person answered, and a stronger answer for each. Flag anything they said that conflicts with the resume they sent, or that's on the don't-mention list, so they can get ahead of it.
-2. **Thank-you email:** draft it the same day, addressed to the interviewer by name, citing two or three specific points from the conversation. It's also the place for experience that came up but isn't on the resume.
-3. **Next round:** update the prep doc with what this round revealed, and look at the backgrounds of the people on the next panel and of current team members in the role.
-4. Log the step and date on the Applied card.
+1. **Add a dated debrief at the top of the prep doc** with: outcome; the next steps with names and dates as stated; what was learned (why they are hiring, the first focus, the hardest problem, team structure, growth plans, comp signals); the questions actually asked, what the person answered, and a stronger answer for each; fixes before the next round; and what to prepare next.
+2. **Fixes worth flagging**:
+   - Answers that wandered before reaching the strongest example. Lead with the most recent, numbered result.
+   - Claims that go beyond the evidence, or conflict with the resume they sent. Offer the exact wording to use instead.
+   - Anything on the don't-mention list.
+   - Stories framed in a way that could hurt ("gray hat" methods, "I applied to test my tool").
+   - Credentials cited that should be current and on the resume.
+   - Comp handling. If the person disclosed current pay or called the top of the range their floor, coach them to state a target next time (top of the base range plus bonus and equity) rather than current pay. If they gave two numbers on one call, or the call and their portfolio or application disagree, flag it first: recommend one target with its basis (posted range, whether there's a bonus, benchmarks, any signal the recruiter will go above range), and leave the final number to them.
+   - **Claims made on the call that aren't in the record** (direct reports, a compliance domain, a tool, a team size). Mark each [confirm]. If true, offer to add it to the resumes before the next round; if not, give the exact correction to make next time.
+   - **Numbers that differ across processes.** Compare every figure said on the call (budgets, attendance, revenue, team size, ranks) against the record and against what the person told other companies, using earlier debriefs and prep docs. One metric stated three ways to three employers is a reference-check risk. Name the figure to standardize on.
+   - Name slips or likely transcription errors on company and employer names, so the person says them clearly next time.
+   - **New proof points that surfaced** (a process cut from hours to minutes, a fast rebuild). List them and offer to add them to the resumes and the next prep doc.
+3. **Prepare the next round**: build the next prep doc to the full standard, including the overlap diagram and the pay section. Lay out the process the recruiter described as a table (step, who, format) with the expected decision date. Check the likely dates for the next round against the person's other scheduled interviews and work constraints, and flag any clash. Look up the named next interviewers and current team members in the role. Draft answers for the problem the interviewer said is hardest, and outline a 30/60/90 plan in the interviewer's own framing. Get ready for any take-home or presentation they described, and for any promise the person made to follow up.
+4. **Update the tracker**: milestone (screen done, next step and date, key intel, link to the doc) and contact (recruiter, hiring manager by name, next interviewers).
+5. **Draft a thank-you note to send the same day**: formal and short. Address the interviewer by name and cite one or two specific points from the conversation. Include one useful ask (for example, the name of a next-round interviewer) and the person's full name and contact info in the signature. It's also the place to correct anything misstated on the call; when comp came out muddled, offer an optional one-line restatement of the single target, marked as optional and the person's decision. Show it in chat first, then offer to save it as a draft in their email, asking which address to send from.
 
 ### Offer, negotiation and withdrawal
 
@@ -334,6 +383,10 @@ End by telling them what the search revealed, not just what it found:
 **Report saturation honestly.** When additional searches stop producing new matches, say so and pivot to higher-value actions — outreach, resume tailoring, credential questions — rather than performing more searching.
 
 **Don't overstate a finding.** If one posting has an unusual qualification path, verify before claiming it's a company-wide pattern.
+
+**Correct your own statements when new evidence arrives.** If a later search contradicts something already said or written in a doc ("no evidence of X"), say so plainly and fix the doc the same turn.
+
+**Never send on the person's behalf without a clear yes.** Drafting a reply is not sending it. Don't send, schedule, or create email drafts unless asked, and never describe a draft as sent.
 
 ## Related work
 
