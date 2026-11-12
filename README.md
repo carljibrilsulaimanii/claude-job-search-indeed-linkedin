@@ -332,7 +332,7 @@ its top level. The folder has:
 
 | File | What it does |
 |---|---|
-| [`skills/job-search/SKILL.md`](skills/job-search/SKILL.md) | The workflow Claude follows: check that Indeed and LinkedIn are connected and that the LinkedIn extension is current, ingest past applications, extract capabilities, search, score, rule out, harvest contacts, build and maintain the Job Search Tracker artifact, and make interview prep docs |
+| [`skills/job-search/SKILL.md`](skills/job-search/SKILL.md) | The workflow Claude follows: check that Indeed and LinkedIn are connected and that the LinkedIn extension is current; take your background and standing rules, and save every correction as a new rule; ingest past applications; search by capability on local and remote axes; score, rule out and harvest contacts; build and maintain the Job Search Tracker artifact; apply with guardrails (two submit modes, hand-offs for passwords, codes and IDs, no help on forms that ban AI); check all mail and the calendar for replies; prep and debrief interviews; and find patterns in interviews versus rejections |
 | [`skills/job-search/references/tailoring.md`](skills/job-search/references/tailoring.md) | Tailoring a resume to one posting and checking ATS keyword coverage |
 | [`skills/job-search/references/applications.md`](skills/job-search/references/applications.md) | Screening questions, cover letters, salary fields, the "gap paragraph" |
 | [`skills/job-search/scripts/build_tracker.py`](skills/job-search/scripts/build_tracker.py) | Optional `.xlsx` export, built from one data list in a single pass |
