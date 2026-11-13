@@ -33,10 +33,12 @@ function Log($msg) {
   Add-Content -Path $LogFile -Value $line -Encoding utf8
   Write-Output $line
 }
-function Git([string[]]$GitArgs) {
-  $out = & git -C $RepoDir @GitArgs 2>&1
-  if ($LASTEXITCODE -ne 0) { throw "git $($GitArgs -join ' ') failed: $out" }
-  return $out
+function Invoke-Git([string[]]$GitArgs) {
+  # Windows PowerShell turns git's stderr into errors under "Stop"; judge by exit code instead
+  $ErrorActionPreference = "Continue"
+  $out = & git.exe -C $RepoDir @GitArgs 2>&1 | ForEach-Object { "$_" }
+  if ($LASTEXITCODE -ne 0) { throw "git $($GitArgs -join ' ') failed: $($out -join ' ')" }
+  return ($out -join "`n")
 }
 function FolderHashes($dir) {
   $map = @{}
@@ -56,21 +58,21 @@ try {
   if (-not (Test-Path (Join-Path $RepoDir ".git"))) { throw "Not a git clone: $RepoDir" }
 
   # 1. Fetch
-  $branch = (Git @("rev-parse", "--abbrev-ref", "HEAD")).Trim()
-  Git @("fetch", "--quiet", "origin", $branch) | Out-Null
-  $local = (Git @("rev-parse", "HEAD")).Trim()
-  $remote = (Git @("rev-parse", "origin/$branch")).Trim()
+  $branch = (Invoke-Git @("rev-parse", "--abbrev-ref", "HEAD")).Trim()
+  Invoke-Git @("fetch", "--quiet", "origin", $branch) | Out-Null
+  $local = (Invoke-Git @("rev-parse", "HEAD")).Trim()
+  $remote = (Invoke-Git @("rev-parse", "origin/$branch")).Trim()
 
   # 2. Fast-forward when GitHub is ahead
   if ($local -ne $remote) {
-    $dirty = Git @("status", "--porcelain")
-    $base = (Git @("merge-base", "HEAD", "origin/$branch")).Trim()
+    $dirty = Invoke-Git @("status", "--porcelain")
+    $base = (Invoke-Git @("merge-base", "HEAD", "origin/$branch")).Trim()
     if ($dirty) {
       Log "GitHub has new commits, but the clone has uncommitted changes; not pulling. Commit or discard them, then rerun."
     } elseif ($base -ne $local) {
       Log "The clone has local commits GitHub doesn't have; not pulling. Push or reset them, then rerun."
     } else {
-      Git @("merge", "--ff-only", "--quiet", "origin/$branch") | Out-Null
+      Invoke-Git @("merge", "--ff-only", "--quiet", "origin/$branch") | Out-Null
       Log ("Pulled {0}..{1} from GitHub." -f $local.Substring(0, 7), $remote.Substring(0, 7))
     }
   }
