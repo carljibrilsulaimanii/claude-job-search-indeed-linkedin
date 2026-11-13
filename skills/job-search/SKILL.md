@@ -379,6 +379,14 @@ Suggest a transcription notetaker before calls, and mention that recording conse
 - Withdrawal: short and gracious, stating the mismatch factually and leaving the door open.
 - Record offers, counters and outcomes on the Applied card.
 
+## 12. Keeping this skill current
+If the skill was installed from a GitHub repo, a daily task keeps the installed copy in step with it:
+- `scripts/sync-from-github.ps1` (Windows) fetches the repo, fast-forwards a clean local clone, and copies the repo's `skills/job-search` folder over the installed skill whenever anything differs. It backs up the old copy first and logs every run. It never pushes.
+- Set it up once with Task Scheduler, daily, running as the person (the commands are in the script's header). Run it once by hand to check it works.
+- It won't pull over a clone with uncommitted edits or local commits; it logs that and leaves both copies alone until the person commits, pushes or discards them.
+- At the start of a job-search session, read the last line of the sync log. If it shows an ERROR or a skipped pull, say so before anything else; don't assume the skill is current.
+- Changes to the skill go through the repo (edit, commit, push). An edit made only to the installed copy is overwritten by the next sync.
+
 ## Ground rules
 - Never invent a fact about the person, a listing, a company, a pay range or a link. If a tool returned only a title, say so.
 - Never certify something false on the person's behalf, even when they ask. Say no once, briefly, and offer the honest route.
@@ -393,6 +401,7 @@ Suggest a transcription notetaker before calls, and mention that recording conse
 - `references/tailoring.md`: adapting a resume to one posting and checking ATS keyword coverage.
 - `references/applications.md`: screening questions, cover letters, salary fields and the "gap paragraph".
 - `scripts/build_tracker.py`: optional spreadsheet export.
+- `scripts/sync-from-github.ps1`: daily check that updates the installed skill from this repo (section 12).
 
 ### Optional: spreadsheet export
 Only when the person asks for a file. Use `scripts/build_tracker.py`, building the workbook from a single source of truth in one pass. Do not insert rows into an existing spreadsheet — row insertion silently overwrites adjacent rows and desynchronizes the link column from the company column. After writing, verify the row count and that every link is non-empty and paired with its company. Gold = NEW, blue = REACH, grey = Applied, with a legend in the header.

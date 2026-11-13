@@ -336,6 +336,7 @@ its top level. The folder has:
 | [`skills/job-search/references/tailoring.md`](skills/job-search/references/tailoring.md) | Tailoring a resume to one posting and checking ATS keyword coverage |
 | [`skills/job-search/references/applications.md`](skills/job-search/references/applications.md) | Screening questions, cover letters, salary fields, the "gap paragraph" |
 | [`skills/job-search/scripts/build_tracker.py`](skills/job-search/scripts/build_tracker.py) | Optional `.xlsx` export, built from one data list in a single pass |
+| [`skills/job-search/scripts/sync-from-github.ps1`](skills/job-search/scripts/sync-from-github.ps1) | Optional (Windows, Claude Code): a daily check that pulls this repo and updates your installed skill when it changed. See 4e |
 
 **4c.** In Claude Desktop, open **Customize**, select **Skills**, click **+ Add** and
 upload the zip (wording may differ).
@@ -345,6 +346,28 @@ upload the zip (wording may differ).
 *Claude Code instead of Desktop (optional):* copy the `skills/job-search` folder to
 `~/.claude/skills/job-search`. Claude Code picks it up in new sessions. You still need
 connectors that Claude Code can see.
+
+**4e. Keep the skill updated (optional, Windows, Claude Code).** About 3 minutes.
+Clone this repo instead of downloading the ZIP (`git clone https://github.com/carljibrilsulaimanii/claude-job-search-indeed-linkedin`),
+then schedule [`skills/job-search/scripts/sync-from-github.ps1`](skills/job-search/scripts/sync-from-github.ps1)
+to run once a day. Its header has the three Task Scheduler commands; replace
+`C:\path\to\clone` with your clone's folder. Each run fetches the repo, fast-forwards your
+clone, and, if the skill changed, backs up `~/.claude/skills/job-search` and copies the new
+version in. It writes one line per run to `~/.claude/skills/job-search-sync.log` and never
+pushes. Run it once by hand first:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\skills\job-search\scripts\sync-from-github.ps1 -RepoDir .
+```
+
+Runs [`skills/job-search/scripts/sync-from-github.ps1`](skills/job-search/scripts/sync-from-github.ps1).
+
+⚠️ Edit the skill in the repo, not in `~/.claude/skills/job-search`: the next sync replaces
+the installed copy. The sync won't pull over a clone with uncommitted edits; it logs that and
+waits.
+
+✅ **Check:** the log's last line says "Updated the installed skill" or "No changes", and
+Task Scheduler lists the task with a daily trigger.
 
 🔄 From now on, every job-search session starts with an update check. Claude confirms
 Indeed and LinkedIn are connected and the LinkedIn extension is **Enabled**, and compares
