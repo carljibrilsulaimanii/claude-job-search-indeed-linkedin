@@ -99,6 +99,9 @@ Communication:
 - Close browser tabs when an application is done? [yes]
 - How should updates be delivered: short list, or full detail? [short list]
 
+### Pay numbers to capture
+Ask for three numbers and save them as rules: the target (what to ask for), the walk-away (the lowest base the person will accept), and current pay counted as only what is actually paid. A bonus on paper that has never been paid is not current pay. Rule out postings below the walk-away, not below an older floor, and say which number a decision used.
+
 ### Capturing new rules
 - Any time the person corrects Claude ("don't do X", "always Y", "skip Z", "why do you keep...") or answers a one-off question that will come up again, treat it as a standing rule.
 - Restate it in one line, save it with the date, and confirm: "Saved rule: always pick Sign in with Google on ADP."
@@ -336,6 +339,8 @@ Checks to run (count from the tracker; report as numbers, for example "1 in 8 ve
 9. Channel: which source (LinkedIn, Indeed, company site, referral) produced the conversations.
 10. Recurring friction: application systems that keep failing, questions that keep needing the person, steps where applications stall.
 
+11. Interview funnel: which round type each loss or stall came at (recruiter, values, technical, hiring manager, executive). Then read the debriefs of the lost and stalled rounds side by side and count the flags that repeat: numbers that drift from the record, the person talking down a core skill to a technical interviewer, long answers that reach the point late, answers routed to the person's own tools instead of the platform the employer uses, gaps on the employer's second platform, and comp handled two different ways. The repeats go into the next prep doc for that round type as a short table: what happened, where, what to do instead.
+
 Turn each real pattern into a proposed rule and ask before applying it:
 - Format: finding (with numbers), then the proposed rule, then a yes/no question. Example: "Workforce roles got 1 call per 8 applications; corporate HR got 1 per 50. Proposed rule: in each sweep, fill at least half the Active list with workforce roles. Use this rule?"
 - Other examples: "Every interview came from a local job. Rank local and hybrid above remote?" / "Large-company systems rejected you within 2 days 14 times. Lead with total years of hiring (7) on those applications?" / "Spanish blocked 14 roles. Add conversational Spanish to the resume if true, or keep ruling these out?" / "This sign-in failed twice. Skip jobs on that system?"
@@ -359,6 +364,14 @@ Build a prep doc as soon as an interview is booked, without being asked, and lin
 12. Guardrails: a Don't-claim list (credentials not held, tools only tried), a Say-exactly list (numbers that must match the resume), and a check of the LinkedIn headline.
 13. A thank-you note draft.
 Final rounds add a corrections table (said earlier, record shows, say now), a 30/60/90 plan, and logistics.
+Technical and hiring-manager rounds add:
+- What lost past technical rounds: the repeated debrief flags from section 9, check 11, each with the fix for this round.
+- An answer shape to rehearse: the answer in the first sentence, a number in the second, then how, in three steps at most, then an offer to go deeper.
+- Native first, then escalate: for any how-would-you question, the platform's built-in feature, then a workflow, then custom code or an API layer, with the reason at each step. Clients and reps live in the platform, not in the person's own tools.
+- A short refresher on the employer's second platform (the one the person uses less), and a platform-comparison answer: where each one holds up, where it strains, and the questions that decide it.
+- Three technical questions to rehearse out loud, taken from what earlier rounds at this employer probed.
+- Never volunteer a weakness in the core skill the role is hired for. State what the person builds and point to one thing in production.
+Pay level check: compare the employer's band with the same title at similar employers. If the band is market for the title but below the person's walk-away, the gap is the level, not a lowball. Suggest asking HR, before the next round, whether a senior or lead version of the role has a higher band.
 - Look the interviewer up before writing the questions. A first round can be with an executive (a COO or founder), not a recruiter, which changes what it tests. Their public posts give useful hooks; don't recite them back, and leave personal details about the interviewer out of the doc.
 - Facts in prep docs must match across every employer. When two docs or applications give different figures for the same fact, ask the person which is right, fix every doc, and save the figure as a standing rule.
 - A new round at the same employer goes at the top of the existing prep doc (status, what this round tests, the last round's debrief and corrections, stories, questions), not into a new doc.
@@ -370,6 +383,10 @@ After the interview (a transcript, notes, or "how did it go?"), in the same turn
 - List new proof points and offer to add them to the resumes.
 - Update the tracker card with the next step and every named person.
 - Draft a short, formal thank-you note specific to the conversation, with the person's full name and contact details, following their rule on questions. Show it in chat; save it as an email draft only if asked; never send it without a yes.
+- Transcripts mishear names. A garbled employer, company or product name (for example the current employer heard as a similar-sounding word) is a transcription error, not something the person said; never flag it as a slip. Flag a misstatement only when the meaning is wrong: a number, a claim, a credential. Save the person's known mishearings as a rule.
+- Grade with signals, not warmth. Don't predict "probably advances" from a friendly call. Name the concrete signals (a named next interviewer, a date, pay volunteered, the interviewer's follow-up questions) and the round most likely to decide it. Record the read on the tracker card, then compare it with the outcome; when reads keep missing, say so and weigh warmth less.
+- Critique, roasts and change notes stay in chat. The prep doc reads in a final voice: the debrief, the fixes and the next-round prep, not commentary on the person.
+- Ask once whether the person wants thank-you notes at all, and save the answer as a rule. Some people skip them; don't draft one when the rule says no.
 Suggest a transcription notetaker before calls, and mention that recording consent rules vary by state and country.
 
 ## 11. Offers and withdrawal
